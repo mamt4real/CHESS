@@ -103,8 +103,8 @@ export default class Player{
             castle = (Math.abs(determiNant) == 2) && (from.charAt(1) === rank);
             if(castle){
                 delete this.pieces[(determiNant == 2?"a":"h")+rank];
-                this.pieces[(determiNant == 2?"c":"e")+rank] = "R" + (determiNant == 2?"l":"r");
-                move = [to,(determiNant == 2?"c":"e")+rank,false,"Castle " + (determiNant == 2?"Kingside":"Queenside"),"",false];
+                this.pieces[(determiNant == 2?"c":"f")+rank] = "R" + (determiNant == 2?"l":"r");
+                move = [to,(determiNant == 2?"c":"f")+rank,false,"Castle " + (determiNant == 2?"Kingside":"Queenside"),"",false];
             }
         }
         //effect opponent's check scenario
@@ -130,7 +130,7 @@ export default class Player{
 
         if(castle){
             let rank = this.name == "white"?"8":"1";
-            delete this.pieces[(determiNant == 2?"c":"e")+rank];
+            delete this.pieces[(determiNant == 2?"c":"f")+rank];
             this.pieces[(determiNant == 2?"a":"h")+rank] = "R" + (determiNant == 2?"l":"r");
         }
         opponent.inCheck = checkValue;
@@ -316,15 +316,15 @@ export default class Player{
                     }
                     let spaces = [];
                     let rook = this.name == "white"?"8":"1";
-                    //check kingside castling if left rook has not yet moved...
+                    //check queenside castling if left rook has not yet moved...
                     if((this.pieces["a" + rook] === "Rl") && (this.movesCount["Rl"] == 0)){
-                        spaces = this.name == "white"?["b8","c8"]:["b1","c1"];
+                        spaces = this.name == "white"?["b8","c8","d8"]:["b1","c1","d1"];
                         if(isPossible(spaces))
                             valids.push(spaces[0]);
                     }
-                    //check queenside castling if right rook has not yet moved...
+                    //check kingside castling if right rook has not yet moved...
                     if((this.pieces["h" + rook] === "Rr") && (this.movesCount["Rr"] == 0)){
-                        spaces = this.name == "white"?["f8","e8","g8"]:["f1","e1","g1"];
+                        spaces = this.name == "white"?["g8","f8"]:["g1","f1"];
                         if(isPossible(spaces))
                             valids.push(spaces[0]);
                     }
