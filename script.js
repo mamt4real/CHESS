@@ -41,7 +41,7 @@ function initialise(){
         "a1":"Rl","h1":"Rr",
         "b1":"Nl","g1":"Nr",
         "c1":"Bl","f1":"Br",
-        "d1":"K","e1":"Q",
+        "d1":"Q","e1":"K",
         "a2":"P1","h2":"P8",
         "b2":"P2","g2":"P7",
         "c2":"P3","f2":"P6",
@@ -51,7 +51,7 @@ function initialise(){
         "a8":"Rl","h8":"Rr",
         "b8":"Nl","g8":"Nr",
         "c8":"Bl","f8":"Br",
-        "d8":"K","e8":"Q",
+        "d8":"Q","e8":"K",
         "a7":"P1","h7":"P8",
         "b7":"P2","g7":"P7",
         "c7":"P3","f7":"P6",
@@ -598,11 +598,11 @@ function drawBoard(){
     let board = document.getElementById("chess-board");
     board.innerHTML = "";
     let imagesW = ["chess-pieces/black-rook.png","chess-pieces/black-knight.png","chess-pieces/black-bishop.png",
-    "chess-pieces/black-king.png","chess-pieces/black-queen.png",
+    "chess-pieces/black-queen.png","chess-pieces/black-king.png",
     "chess-pieces/black-bishop.png","chess-pieces/black-knight.png","chess-pieces/black-rook.png"];
     
     let imagesB = ["chess-pieces/white-rook.png","chess-pieces/white-knight.png","chess-pieces/white-bishop.png",
-    "chess-pieces/white-king.png","chess-pieces/white-queen.png",
+    "chess-pieces/white-queen.png","chess-pieces/white-king.png",
     "chess-pieces/white-bishop.png","chess-pieces/white-knight.png","chess-pieces/white-rook.png"];
     
     let table = document.createElement("table");
@@ -643,7 +643,7 @@ function drawBoard(){
 	  	    b.addEventListener('dragleave',dragOut);
             b.addEventListener('drop',dragDrop);
             
-            b.style.backgroundColor = ["orange","yellow"][(i+j)%2];
+            b.style.backgroundColor = ["yellow","orange"][(i+j)%2];
 
             if([0,1,6,7].includes(i)){
                 let imgsrc = "";
