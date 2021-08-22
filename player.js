@@ -103,8 +103,8 @@ export default class Player{
             castle = (Math.abs(determiNant) == 2) && (from.charAt(1) === rank);
             if(castle){
                 delete this.pieces[(determiNant == 2?"a":"h")+rank];
-                this.pieces[(determiNant == 2?"c":"f")+rank] = "R" + (determiNant == 2?"l":"r");
-                move = [to,(determiNant == 2?"c":"f")+rank,false,"Castle " + (determiNant == 2?"Kingside":"Queenside"),"",false];
+                this.pieces[(determiNant == 2?"d":"f")+rank] = "R" + (determiNant == 2?"l":"r");
+                move = [to,(determiNant == 2?"d":"f")+rank,false,"Castle " + (determiNant == 2?"Kingside":"Queenside"),"",false];
             }
         }
         //effect opponent's check scenario
@@ -130,7 +130,7 @@ export default class Player{
 
         if(castle){
             let rank = this.name == "white"?"8":"1";
-            delete this.pieces[(determiNant == 2?"c":"f")+rank];
+            delete this.pieces[(determiNant == 2?"d":"f")+rank];
             this.pieces[(determiNant == 2?"a":"h")+rank] = "R" + (determiNant == 2?"l":"r");
         }
         opponent.inCheck = checkValue;
@@ -318,7 +318,7 @@ export default class Player{
                     let rook = this.name == "white"?"8":"1";
                     //check queenside castling if left rook has not yet moved...
                     if((this.pieces["a" + rook] === "Rl") && (this.movesCount["Rl"] == 0)){
-                        spaces = this.name == "white"?["b8","c8","d8"]:["b1","c1","d1"];
+                        spaces = this.name == "white"?["c8","d8","b8"]:["c1","d1","b1"];
                         if(isPossible(spaces))
                             valids.push(spaces[0]);
                     }
