@@ -156,7 +156,7 @@ function clickMe(id, animateMovement = true,newParent = null){
             let castle = Math.abs(determiNant) == 2;
             if(castle){
                 let rooKfrom = "#" + (determiNant == 2?"a":"h")+rank + " img";
-                let rookTo = "#" + (determiNant == 2?"c":"e")+rank;
+                let rookTo = "#" + (determiNant == 2?"d":"f")+rank;
                 moveAnimate(rooKfrom,rookTo);
             }
 
