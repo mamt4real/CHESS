@@ -104,7 +104,7 @@ export default class Player{
             if(castle){
                 delete this.pieces[(determiNant == 2?"a":"h")+rank];
                 this.pieces[(determiNant == 2?"d":"f")+rank] = "R" + (determiNant == 2?"l":"r");
-                move = [to,(determiNant == 2?"d":"f")+rank,false,"Castle " + (determiNant == 2?"Kingside":"Queenside"),"",false];
+                move = [to,(determiNant == 2?"d":"f")+rank,false,"Castle " + (determiNant == 2?"Queenside":"Kingside"),"",false];
             }
         }
         //effect opponent's check scenario
