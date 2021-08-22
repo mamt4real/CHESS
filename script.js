@@ -476,8 +476,8 @@ function undoMove(){
 
     if(lastMove[3].startsWith("Castle")){
 
-        let rookDest = ((lastMove[1].charAt(0) == "c")?"a":"h") + lastMove[1].charAt(1);
-        let kingDest = "d" + lastMove[0].charAt(1);
+        let rookDest = ((lastMove[1].charAt(0) == "d")?"a":"h") + lastMove[1].charAt(1);
+        let kingDest = "e" + lastMove[0].charAt(1);
         
         delete player.pieces[lastMove[0]];
         player.pieces[kingDest] = "K";
