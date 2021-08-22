@@ -383,38 +383,13 @@ export default class Player{
                 break;
             }
             case "Q":{
-                for(let i=row+1,j=col+1;(i<=8) && (j<8);j++,i++){
-                    if(!addFunc(i,j,this))
-                        break;                                            
-                }//add north-west                
-                for(let i=row-1,j=col-1;(i>=1)&&(j>=0);j--,i--){
-                    if(!addFunc(i,j,this))
-                        break;
-                }//add north-east
-                for(let i=row+1,j=col-1;(i<=8)&&(j>=0);j--,i++){
-                    if(!addFunc(i,j,this))
-                        break;
-                }//add south-west
-                for(let i=row-1,j=col+1;(i>=1)&&(j<8);j++,i--){
-                    if(!addFunc(i,j,this))
-                        break;
-                }//add upward
-                for(let i = row +1;i<=8;i++){
-                    if(!addFunc(i,col,this))
-                        break;
-                }//add downward
-                for(let i = row -1;i>=1;i--){
-                    if(!addFunc(i,col,this))
-                        break;
-                }//add rightward
-                for(let i = col +1;i<8;i++){
-                    if(!addFunc(row,i,this))
-                        break;
-                }//add leftward
-                for(let i = col -1;i>=0;i--){
-                    if(!addFunc(row,i,this))
-                        break;
-                }
+                //Queens movements is equivalent to rook and bishops movements
+                this.pieces[pieceID] = "R";
+                const rookMoves = this.getValidMovesOf(pieceID,opponent,filtered);
+                this.pieces[pieceID] = "B";
+                const bishopMoves = this.getValidMovesOf(pieceID,opponent,filtered);
+                this.pieces[pieceID] = "Q";
+                valids = [...rookMoves,...bishopMoves];
               }  break;
             
             case "P":{
