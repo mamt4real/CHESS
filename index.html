@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main">
+        <div id="header" class="resources">
+            <nav class="dropdown">
+                <button onclick="showMenu()" class="dropbtn">Settings</button>
+                <div class="dropdown-content" id="menu">
+                    <button onclick="(() => {initialise();hideMenu()})()">Reset</button>
+                    <button onclick="showHelp()">Help</button>
+                    <button onclick="setGameTime()">Play Timer</button> 
+                    <div id="mode-control">
+                        <button onclick="" id="mode-btn">Mode &nbsp;&nbsp;&nbsp;&nbsp;></button>
+                        <div class="dropdown-content" id="mode">
+                            <button onclick="activateAuto(false)">Multiplayer</button> 
+                            <button onclick="activateAuto(true)">Single Player</button>
+                        </div>
+                    </div>
+                    <div id="diff-control" style="display: none;">
+                        <button onclick="" id="diff-btn">Difficulty &nbsp;&nbsp;&nbsp;&nbsp;></button>
+                        <div class="dropdown-content" id="diff">
+                            <button onclick="setDifficulty('easy')">Easy</button> 
+                            <button onclick="setDifficulty('normal')">Normal</button>
+                            <button onclick="setDifficulty('hard')">Hard</button>
+                            <button onclick="setDifficulty('crazy')">Crazy</button>
+                        </div>
+                    </div>         
+                </div>
+                <div class="dropdown-content" id="help">
+                    <h4>HELP</h4>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                        Enim architecto, maxime eligendi voluptatibus perspiciatis possimus,
+                        porro explicabo dignissimos aperiam illo, consequuntur labore.
+                        Recusandae officiis totam vero, consequuntur sunt sapiente id.
+                    </p>
+                    <div class="close">
+                        <button onclick="hideHelp()">Close</button>
+                    </div>
+                </div>
+                <h3 id="mode-head">Multiplayer</h3>
+            </nav>
+            <div class="score-turn">
+                <div class="score">
+                    <table class="score-board" border="border">
+                        <thead>
+                            <tr>
+                                <th>Player</th><th>Score</th><th>Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th>White</th><td id="white_score">0</td><td id="white-time">05:00</td>
+                            </tr>
+                            <tr>
+                                <th>Black</th><td id="black_score">0</td><td id="black-time">05:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="turn-error">
+                    <div id="Turn-indicator" class="indicator">White Turn</div>
+                    <div id="Error-Indicator" class="indicator"></div>
+                </div>
+            </div>
+            
+        </div>
+        <div class="body">
+            <div id="black-collector" class="collectors"></div>
+            <div id="chess-board"></div>
+            <div id="white-collector" class="collectors"></div>
+        </div>
+        <div id="controls" class="resources">
+            <div class="resource-tile" id="undo" onclick="undoMove()">Undo</div>            
+            <div class="resource-tile" id="undo-count">2 undo(s) left</div>
+            <div class="resource-tile" onclick="showThreatMap()">Threat Map</div>        
+        </div>
+    </div>
+    <script src="jquery-3.6.0.js"></script>
+    <script src="script.js" type="module"></script>
+</body>
+</html>

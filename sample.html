@@ -1,0 +1,204 @@
+ <!DOCTUPE html>
+<html>
+<head>
+	<title>Drag and Drop</title>
+	<link rel="stylesheet" href="style.css" />
+	<style>
+		body{
+			background-color:darksalmon;
+		}
+		.fill{
+			position: relative;
+			width: 150px;
+			height:150px;
+			top:5px;
+			left:5px;
+			cursor:pointer;
+			background-image:  url('U17CS1070.jpg');
+			background-color: #7B3F00;
+		}
+		.empty{
+			display: inline-block;
+			width: 160px;
+			height: 160px;
+			background-color:white;
+			margin:10px;
+			border: 1px solid salmon;
+		}
+		.hovered{
+			border-style:dashed;
+			background-color: #f4f4f4;
+		}
+		.hide{
+			display: none;
+		}
+		.hold{
+			border: solid #ccc 4px;
+		}
+	</style>
+</head>
+<body>
+ <div class="empty">
+ 	<div class="fill" draggable="true"></div>
+ </div>
+ <div class="empty"></div>
+ <div class="empty"></div>
+ <div class="empty"></div>
+ <div class="empty"></div>
+ <script>
+	  const fill = document.querySelector('.fill');
+	  const boxes = document.querySelectorAll('.empty');
+	  
+	  fill.addEventListener('dragstart',dragStart);
+	  fill.addEventListener('dragend',dragEnd)
+	  
+	  for(const box of boxes){
+	  	box.addEventListener('dragover',dragOver);
+	  	box.addEventListener('dragenter',dragEnter);
+	  	box.addEventListener('dragleave',dragOut);
+	  	box.addEventListener('drop',dragDrop);
+	  	box.addEventListener('click',clickFunction);
+	  }
+	  
+	  function dragStart(){
+	  	this.className += ' hold';
+	  	setTimeout(() => {this.className = 'hide'},0);
+	  	if(isValidClick(this.id)){
+	  		valids = player.getValidMoves(this.id);
+	  		from = this.id;
+	  	}
+	  }
+	  
+	  function dragEnd(){
+	  	this.className = 'fill';
+	  }
+	  function dragOver(e){
+	  	e.preventDefault();	
+	  }
+	  function dragEnter(e){
+	  	e.preventDefault();
+	  	if(valids.includes(this.id)){
+	  		this.className += ' hovered';
+	  	}
+	  }
+	  function dragOut(){
+	  	this.className = 'empty';
+	  }
+	  function dragDrop(){
+	  	if(valids.includes(this.id)){
+	  		
+	  		this.className = 'empty';
+	  		this.append(fill);
+	  	}
+	  } 
+	  
+	 var files = ['a','b','c','d','e','f','g','h'];
+	 
+	 function clickFunction(){
+	 	alert('iam clicked');
+	 	alert('' + getAttackTrajectory('a1','h8','R'));
+	 }
+
+	 function getAttackTrajectory(kingPos,assailantPos,assailantType){
+		var trajectory = [assailantPos];
+		/*if the attacking piece is either Pawn or Night
+		Then the track is only the assailant Position
+		*/
+		if(assailantType == 'P' || assailantType == 'N')
+			return trajectory;
+	
+		/*else assailant is either Queen Bishop or Rook
+		we get the row and col for both king and assailant
+		and add all the tiles in between them*/
+	
+		var kingRow = parseInt(kingPos.charAt(1));
+		var kingCol = files.indexOf(kingPos.charAt(0));
+		var assailantRow = parseInt(assailantPos.charAt(1));
+		var assailantCol = files.indexOf(assailantPos.charAt(0));
+	
+		switch(true){
+		//if both king and assailant are on thesame row
+			case (kingRow == assailantRow):{
+				let update = kingCol<assailantCol ?1:-1;
+				for(let i=kingCol +update; i != assailantCol ; i+=update)
+					trajectory.push(files[i] + '' + kingRow);
+				break;
+		//if both king and assailant are on thesame column
+			}case (kingCol == assailantCol):{
+				let u = assailantRow < kingRow?1:-1;
+				for(let i=assailantRow +u; i != kingRow; i+=u)
+					trajectory.push(files[kingCol] + '' + i);
+				break;			
+		//both king and assailant are on the leading diagonal
+			}case(((assailantRow-kingRow)*(assailantCol-kingCol)) >0):{
+				let update = ((assailantRow-kingRow)>0)?-1:1;
+				for(let i=assailantRow +update, j = assailantCol + update; i != kingRow ; i+=update,j+=update)
+					trajectory.push(files[j] + '' + i);
+				break;
+		
+		//both king and assailant are on the reverse diagonal
+			}case(((assailantRow - kingRow)*(assailantCol - kingCol)) < 0):{
+				let rowUpdate = ((assailantRow-kingRow)>0)?-1:1;
+				let colUpdate = ((assailantCol - kingCol)>0)?-1:1;
+				for(let i = assailantRow + rowUpdate, j = assailantCol + colUpdate; i != kingRow; i += rowUpdate, j += colUpdate)
+					trajectory.push(files[j] + '' + i);
+				break;
+			}
+		}
+		return trajectory;
+	}
+
+	/* deprecated
+function castle(left){
+    
+    let player = white;
+    let opponent = black;
+    let direc = left?"Kingside":"Queenside";
+    let rookType = "R" + (left?"l":"r");
+    let kinPos = "d8";
+    let rokPos = left?"a8":"h8";
+    let spaces = left?["b8","c8"]:["f8","e8","g8"];
+    if(!whiteTurn){
+        player = black;
+        opponent = white;
+        kinPos = "d1";
+        rokPos = left?"a1":"h1";
+        spaces = left?["b1","c1"]:["f1","e1","g1"];
+    }
+    let attackedSquares = opponent.attackSquares(player);
+    if(!player.pieces.hasOwnProperty(kinPos) || (player.pieces[kinPos] != "K") || !player.pieces.hasOwnProperty(rokPos)
+        || (player.pieces[rokPos] != rookType) || (player.movesCount["K"] > 0) || (player.movesCount[rookType]>0)){
+        document.getElementById("Error-Indicator").innerText = "Not possible to castle "+direc;        
+        return;
+    }    
+    for(let i=0; i<spaces.length;i++){        
+        if(player.pieces.hasOwnProperty(spaces[i]) || opponent.pieces.hasOwnProperty(spaces[i]) || attackedSquares.includes(spaces[i])){
+            document.getElementById("Error-Indicator").innerText = "Not possible to castle "+direc;
+            return;
+        }
+    }
+    delete player.pieces[kinPos];
+    player.pieces[spaces[0]] = "K";
+
+    player.pieces[spaces[1]] = player.pieces[rokPos];
+    delete player.pieces[rokPos];
+
+    moveAnimate("#" + kinPos + " img", "#" + spaces[0]);
+    moveAnimate("#" + rokPos + " img", "#" + spaces[1]);
+    player.movesRecord.push([spaces[0],spaces[1],false,"Castle "+direc,"",false]);
+    player.movesCount["K"]++;
+    whiteTurn = !whiteTurn;
+    updateTexts();
+} */
+
+	
+	/*
+	function makeTheMove(frm,to,opponent){
+		...
+		if(this.getValidMoves(to,opponent))
+	}
+	*/
+	</script>
+</body>
+	
+</html>
