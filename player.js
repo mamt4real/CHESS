@@ -181,6 +181,10 @@ export default class Player{
 
         let move = this.temporaryMove(from,to,opponent, () => "effect The Move");
         let temp = this.pieces[move[1]];
+        
+        //If it's a castling move temp should be move[0]....discovered while debugging when u undo castling and tried to do it again
+        if(move[3].startsWith("Castle"))
+            temp = this.pieces[move[0]];
 
         let kingTile = document.getElementById(opponent.getKingPosition());
         //check if the move puts the opponent's king in check and effect it
