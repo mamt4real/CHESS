@@ -32,6 +32,7 @@ activateAuto,setGameTime,showThreatMap,
 clickMe,initialise
 ].forEach(fxn => window[fxn.name] = fxn);
 
+drawBoard();
 initialise();
 
 //reset or initialisation function
@@ -88,7 +89,7 @@ function initialise(){
         document.getElementById("mode-head").innerText = "Single Player (" + difficulty + ")";
     }
 
-    drawBoard();
+    placePiecesOnBoard();
 }
 function clickMe(id, animateMovement = true,newParent = null){
     let player = whiteTurn?white:black;
@@ -595,15 +596,8 @@ function setDifficulty(val){
 
 function drawBoard(){
     
-    let board = document.getElementById("chess-board");
+    const board = document.getElementById("chess-board");
     board.innerHTML = "";
-    let imagesW = ["chess-pieces/black-rook.png","chess-pieces/black-knight.png","chess-pieces/black-bishop.png",
-    "chess-pieces/black-queen.png","chess-pieces/black-king.png",
-    "chess-pieces/black-bishop.png","chess-pieces/black-knight.png","chess-pieces/black-rook.png"];
-    
-    let imagesB = ["chess-pieces/white-rook.png","chess-pieces/white-knight.png","chess-pieces/white-bishop.png",
-    "chess-pieces/white-queen.png","chess-pieces/white-king.png",
-    "chess-pieces/white-bishop.png","chess-pieces/white-knight.png","chess-pieces/white-rook.png"];
     
     let table = document.createElement("table");
     table.style.width = "100%";
@@ -644,24 +638,6 @@ function drawBoard(){
             b.addEventListener('drop',dragDrop);
             
             b.style.backgroundColor = ["yellow","orange"][(i+j)%2];
-
-            if([0,1,6,7].includes(i)){
-                let imgsrc = "";
-                if(i==0 || i == 7)
-                    imgsrc = (i==0)?imagesW[j]:imagesB[j];
-                else
-                    imgsrc = (i==6)?"chess-pieces/white-pawn.png":"chess-pieces/black-pawn.png";
-                let img = document.createElement("img");
-                img.setAttribute("src",imgsrc);
-                //img.setAttribute("class","tiles-img");
-                img.style.width = "100%";
-                img.style.height = "100%";              
-                img.setAttribute("draggable","true");
-                img.addEventListener('dragstart',dragStart);
-                img.addEventListener('dragend',dragEnd);
-                
-                b.appendChild(img);
-            }
             td.appendChild(b);
             tr.appendChild(td);
         }
@@ -688,3 +664,26 @@ function drawBoard(){
     board.appendChild(table);
 }
 
+function placePiecesOnBoard (){
+    document.querySelectorAll("chess-board button img").forEach(node => node.remove());
+
+    const srcs = {
+        "P":"-pawn.png","K":"-king.png","Q":"-queen.png","B":"-bishop.png","N":"-knight.png","R":"-rook.png"
+    };
+
+    [white,black].forEach(player => {
+        for(const [id,type] of Object.entries(player.pieces)){
+            const parent = document.getElementById(id);
+            let img = document.createElement("img");
+            let imgsrc = "chess-pieces/"+player.name + srcs[type.charAt(0)];
+            img.setAttribute("src",imgsrc);
+            //img.setAttribute("class","tiles-img");
+            img.style.width = "100%";
+            img.style.height = "100%";              
+            img.setAttribute("draggable","true");
+            img.addEventListener('dragstart',dragStart);
+            img.addEventListener('dragend',dragEnd);
+            parent.append(img);
+        }
+    });
+}
