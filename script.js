@@ -665,7 +665,7 @@ function drawBoard(){
 }
 
 function placePiecesOnBoard (){
-    document.querySelectorAll("chess-board button img").forEach(node => node.remove());
+    document.querySelectorAll("#chess-board button img").forEach(node => node.remove());
 
     const srcs = {
         "P":"-pawn.png","K":"-king.png","Q":"-queen.png","B":"-bishop.png","N":"-knight.png","R":"-rook.png"
