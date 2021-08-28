@@ -58,8 +58,6 @@ function initialise(){
         "d7":"P4","e7":"P5"
     },"white"); 
     whiteTurn = true;
-    if(from != null)
-	clickMe(from);
     from = null;
     availableMoves = [];
     to = null;
@@ -392,7 +390,8 @@ function dragOut(){
     this.className = 'tiles';
 }
 function dragDrop(e){
-    this.className = 'tiles';
+    if(!this.className.endsWith("glow"))
+    	this.className = 'tiles';
     clickMe(this.id,false,this);
 }
 //end of Drag and drop Controls
