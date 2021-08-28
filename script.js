@@ -13,7 +13,6 @@ var white;
 var whiteTurn;
 var from;
 var to;
-var prevColor;
 var availableMoves;
 var pieceImg;
 var undoStarted;
@@ -62,7 +61,6 @@ function initialise(){
     if(from != null)
 	clickMe(from);
     from = null;
-    prevColor = "";
     availableMoves = [];
     to = null;
 
