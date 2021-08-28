@@ -59,6 +59,8 @@ function initialise(){
         "d7":"P4","e7":"P5"
     },"white"); 
     whiteTurn = true;
+    if(from != null)
+	clickMe(from);
     from = null;
     prevColor = "";
     availableMoves = [];
